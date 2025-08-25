@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>S3 + CloudFront • Visitor Counter</title>
+    <meta name="color-scheme" content="dark light" />
+    <style>
+      :root{
+        --bg: #0b0f1a;
+        --fg: #e6e9ef;
+        --muted: #a3acc3;
+        --accent: #7aa2ff;
+        --card: rgba(255,255,255,0.05);
+        --border: rgba(255,255,255,0.08);
+        --shadow: 0 10px 30px rgba(0,0,0,0.45);
+      }
+      *{box-sizing:border-box}
+      html,body{height:100%}
+      body{
+        margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+        color:var(--fg); background: radial-gradient(1200px 600px at 80% -20%, #1a245a44, transparent),
+                          radial-gradient(1000px 500px at -10% 120%, #0ea5e944, transparent),
+                          var(--bg);
+        display:grid; place-items:center; padding:24px;
+      }
+      .card{
+        width:min(560px, 92vw);
+        background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+        border:1px solid var(--border);
+        border-radius:20px; padding:28px 28px 22px; box-shadow:var(--shadow);
+        backdrop-filter: blur(10px);
+      }
+      .eyebrow{ letter-spacing:.12em; text-transform:uppercase; color:var(--muted); font-size:12px; margin-bottom:8px }
+      h1{ font-size:28px; line-height:1.15; margin:0 0 10px }
+      p.sub{ margin:0 0 18px; color:var(--muted) }
+
+      .counter{
+        display:flex; align-items:baseline; gap:14px;
+        padding:18px 16px; border:1px dashed var(--border); border-radius:16px;
+        background:var(--card);
+      }
+      .count{
+        font-size:56px; font-weight:800; letter-spacing:-0.03em;
+        line-height:1;
+      }
+      .label{ color:var(--muted); font-size:14px }
+
+      .row{ display:flex; gap:10px; margin-top:16px; flex-wrap:wrap }
+      button, .link{
+        appearance:none; border:none; cursor:pointer;
+        padding:10px 14px; border-radius:12px; font-weight:600;
+        background:#10172b; color:var(--fg); border:1px solid var(--border);
+        transition: transform .08s ease, background .2s ease, border-color .2s ease;
+      }
+      button:hover{ transform: translateY(-1px); background:#0f172a; border-color:#1e293b }
+      .primary{
+        background: linear-gradient(90deg,#5b8cff,#7aa2ff);
+        color:#0b0f1a; border-color:transparent;
+      }
+      .primary:hover{ filter:brightness(1.05) }
+
+      .status{ color:var(--muted); font-size:13px; margin-top:10px; min-height:18px }
+      .ok{ color:#7ee787 } .err{ color:#ff8a8a }
+
+      .spinner{
+        width:18px; height:18px; border:2.5px solid transparent; border-top-color:var(--fg);
+        border-right-color:var(--fg); border-radius:50%;
+        animation: spin .8s linear infinite;
+      }
+      @keyframes spin { to { transform: rotate(360deg) } }
+
+      footer{
+        margin-top:18px; padding-top:14px; border-top:1px solid var(--border);
+        display:flex; justify-content:space-between; color:var(--muted); font-size:12px;
+      }
+      .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+      .link{ text-decoration:none; display:inline-flex; align-items:center; gap:8px; }
+      .link:hover{ border-color:#1e293b }
+      @media (prefers-reduced-motion: reduce){
+        *{ animation: none !important; transition: none !important }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card" role="main" aria-live="polite">
+      <div class="eyebrow">AWS Demo by Subhan</div>
+      <h1>S3 + CloudFront + Serverless Counter</h1>
+      <p class="sub">Simple, fast, and nearly free. Each visit increments a value stored in DynamoDB.</p>
+
+      <section class="counter" aria-label="Visitor counter">
+        <div id="spinner" class="spinner" aria-hidden="true"></div>
+        <div id="count" class="count" aria-live="polite">—</div>
+        <div class="label">visits</div>
+      </section>
+
+      <div class="row">
+        <button id="refresh" class="primary" type="button">Refresh Count</button>
+        <button id="copyApi" type="button" title="Copy API URL">Copy API URL</button>
+      </div>
+
+      <div id="status" class="status" role="status"></div>
+
+      <footer>
+        <div>Edge cached by <span class="mono">CloudFront</span></div>
+        <a id="apiLink" class="link" href="#" target="_blank" rel="noopener">Open API</a>
+      </footer>
+    </main>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
