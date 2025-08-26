@@ -40,26 +40,30 @@ Here’s the logical architecture you should recreate in a diagram tool (e.g., d
 ---
 
 ## 🚀 Steps Performed
-### CloudFront Distribution
-![CloudFront Screenshot](images/cloudfront.png)
+1. Created **S3 bucket** for hosting frontend files.  
+   ![S3 Bucket](images/s3_bucket.png)
+   ![S3 Bucket](images/s3_bucket2.png)
 
-### Lambda Function
-![Lambda Screenshot](images/lambda.png)
+3. Configured **CloudFront** distribution to serve files globally.  
+   ![CloudFront Distribution](images/cloudfront.png)
 
-### DynamoDB Table
-![DynamoDB Screenshot](images/dynamodb.png)
+4. Developed **Lambda function** to update DynamoDB counter.  
+   ![Lambda Function](images/lambda.png)
 
-### API Gateway
-![API Gateway Screenshot](images/apigateway.png)
+5. Set up **DynamoDB table** with partition key for storing visit counts.  
+   ![DynamoDB Table](images/dynamodb.png)
 
-### WAF Rule
-![WAF Screenshot](images/waf.png)
+6. Exposed Lambda via **API Gateway** with `POST`/`GET` method integration.  
+   ![API Gateway](images/apigateway.png)
 
-### CloudTrail Logs
-![CloudTrail Screenshot](images/cloudtrail.png)
+7. Updated frontend JavaScript to call the API Gateway endpoint.  
+   ![Frontend Counter Page](images/frontend.png)
 
-### Working App
-![Frontend App Screenshot](images/frontend.png)
+8. Added **AWS WAF** Web ACL with rate limiting rule.  
+   ![WAF Rule](images/waf.png)
+
+9. Enabled **CloudTrail** to monitor API calls.  
+   ![CloudTrail Logs](images/cloudtrail.png)
 
 ---
 
