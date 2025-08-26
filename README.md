@@ -5,7 +5,7 @@ It consists of a static frontend hosted on **CloudFront** that interacts with an
 The application counts page visits and includes **security (AWS WAF)** and **monitoring (CloudTrail)**.
 
 Live Demo: [CloudFront Deployed App](https://d1nnswwl0n5ldc.cloudfront.net)
-![Frontend]()
+  ![Frontend Counter Page](images/frontend.png)
 ---
 
 ##  Project Overview
