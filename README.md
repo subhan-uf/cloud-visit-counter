@@ -19,7 +19,7 @@ Live Demo: [CloudFront Deployed App](https://d1nnswwl0n5ldc.cloudfront.net)
 ---
 
 ##  Architecture
-Here’s the logical architecture you should recreate in a diagram tool (e.g., draw.io, Lucidchart, Excalidraw):
+Here’s the logical architecture you should recreate in a diagram tool (e.g., draw.io, Lucidchart, Excalidraw): 
 
 1. **User Browser** → accesses static frontend via **CloudFront Distribution**  
 2. **CloudFront** → serves files from **S3 Bucket (Static Website Hosting)**  
